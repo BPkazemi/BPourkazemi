@@ -4,6 +4,7 @@
   "description": "My website http://bpourkazemi.com",
   "main": "app.js",
   "dependencies": {
+    "compression": "^1.0.10",
     "express": "4.x"
   },
   "engines": {
