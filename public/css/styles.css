@@ -1,0 +1,62 @@
+html {
+    height: 100%;
+    width: 100%
+}
+
+body {
+    height: 100%;
+    border-top: 3px solid red;
+    font-family: 'Raleway', 'Helvetica', sans-serif;
+    margin: 0;
+}
+
+/*  Header css  */
+.header {
+    height: 128px; 
+    padding: 115px 42px 0;
+    background: #2979ff;
+}
+
+.name {
+    color: #fff;
+    font-size: 56px;
+}
+
+
+/*  Menu css  */
+.menu {
+    height: 100%;
+    width: 240px; 
+    float: left;
+    padding: 20px;
+    background: #f7f7f7;
+    color: #444444;
+    border-right: 1px solid #e0e0e0;
+}
+dt {
+    padding: 15px 0 15px 22px;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+/*  Content css  */ 
+.content {
+    background: #fff;
+    float: left;
+    margin-left: 35px;
+}
+
+h1 {
+    font-weight: 400;
+}
+
+.project-title {
+    margin-bottom: 30px;
+    color: #2979ff;
+}
+.project-screenshot {
+    margin-bottom: 10px;
+}
+.project-desc {
+    margin-bottom: 32px;
+}
