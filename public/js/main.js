@@ -10,15 +10,10 @@ function init() {
 }
 
 function loadPage( hash ) {
-    console.log("loadPage called");
     switch (hash) {
         case "#projects":
             setSelected("projects");
             ajax("projects");
-            break;
-        case "#about":
-            setSelected("about");
-            ajax("about");
             break;
         case "#resume":
             setSelected("resume");
@@ -32,11 +27,9 @@ function loadPage( hash ) {
 }
 
 function setMenuClickListeners() {
-    var about = document.getElementsByClassName('about')[0],
-        projects = document.getElementsByClassName('projects')[0],
+    var projects = document.getElementsByClassName('projects')[0],
         resume = document.getElementsByClassName('resume')[0];
 
-    about.addEventListener("click", clickHandler("about"), false);
     projects.addEventListener("click", clickHandler("projects"), false);
     resume.addEventListener("click", clickHandler("resume"), false);
 }
@@ -44,7 +37,6 @@ function setMenuClickListeners() {
 function setHashListener() {
     if ("onhashchange" in window) {
         window.onhashchange = function() {
-            console.log("new Hash: " + window.location.hash);
             loadPage(window.location.hash);
         }
     }
@@ -70,9 +62,6 @@ function ajax( route ) {
 
 function clickHandler( route ) {
     switch (route) {
-        case "about":
-            return function() { window.location.hash = "about"; }   
-            break;
         case "projects":
             return function() { window.location.hash = "projects"; }
             break;
@@ -91,39 +80,44 @@ function updateContent( page_type, response ) {
         html = "";
 
     switch (page_type) {
-        case "about":
-            data = response.about;
-            html = "<p>" + data + "</p>";
-            content.innerHTML = html;
-            break;
         case "projects":
             data = response.projects;
-            var curProject, title, screenshotSrc, desc;
+            var curProject, title, screenshotSrc, desc, link, type, width;
+
             for (var i = 0; i < data.length; i++) {
                 curProject = data[i];
                 title = curProject.title;
                 screenshotSrc = curProject.screenshot_src;
-                desc = curProject.desc;
+                desc = curProject.desc,
+                link = curProject.link,
+                type = curProject.type,
+                width = 600; // Default screenshot widths for web projects
 
-                html += 
-                    '<div class="project">' +
-                        '<div class="project-title">' +
-                            '<h1>' + title + '</h1>' +
-                        '</div>' +
-                        '<div class="project-screenshot">' +
-                            '<img src="' + screenshotSrc + '"width="500" height="250">' +
-                        '</div>' +
-                        '<div class="project-desc">' +
-                            '<p>' + desc + '</p>' +
-                        '</div>' +
-                    '</div>'
+                // Looks better 
+                if (type == "mobile") {
+                    width = 300;
+                } 
+
+                html += createCard({
+                    title: title,
+                    link: link,
+                    screenshotSrc: screenshotSrc,
+                    width: width,
+                    desc: desc
+                });
             }
 
             content.innerHTML = html;
             break;
         case "resume":
-            data = response.resume;
-            html = '<p>' + data + '</p>';
+            data = response.resume.resume_src;
+            html = createCard({
+                title: "Resume",
+                link: data,
+                screenshotSrc: "assets/images/Resume.png",
+                width: 600,
+                desc: ''
+            });
             content.innerHTML = html;
             break;
         default:
@@ -132,7 +126,7 @@ function updateContent( page_type, response ) {
 }
 
 function setSelected( selectThisClass ) {
-    var menuOptions = ["projects", "resume", "about"],
+    var menuOptions = ["projects", "resume"],
         curClass,
         curOption;
 
@@ -146,5 +140,45 @@ function setSelected( selectThisClass ) {
             curOption.className = curClass;
         }
     }
+}
+
+function createCard( opts ) {
+    var title = opts.title,
+        link = opts.link,
+        screenshotSrc = opts.screenshotSrc,
+        desc = opts.desc,
+        width = opts.width,
+        html = "";
+
+    if (link) {
+        // If no link is available, don't add an <a> tag
+        html += 
+            '<div class="card">' +
+                '<div class="card-title">' +
+                    '<h1><a href="' + link + '">' + title + '</a></h1>' +
+                '</div>' +
+                '<div class="card-screenshot">' +
+                    '<a href="' + link + '">' + '<img src="' + screenshotSrc + '" width="' + width + '"></a>' +
+                '</div>' +
+                '<div class="card-desc">' +
+                    '<p>' + desc + '</p>' +
+                '</div>' +
+            '</div>'
+    } else {
+        html += 
+            '<div class="card">' +
+                '<div class="card-title">' +
+                    '<h1><a href="' + link + '">' + title + '</a></h1>' +
+                '</div>' +
+                '<div class="card-screenshot">' +
+                    '<img src="' + screenshotSrc + '" width="' + width + '">' +
+                '</div>' +
+                '<div class="card-desc">' +
+                    '<p>' + desc + '</p>' +
+                '</div>' +
+            '</div>'
+    }
+
+    return html;
 }
 

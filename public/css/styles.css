@@ -1,13 +1,7 @@
-html {
-    height: 100%;
-    width: 100%
-}
-
 body {
-    height: 100%;
     border-top: 3px solid red;
     font-family: 'Raleway', 'Helvetica', sans-serif;
-    margin: 0;
+    margin: 0px;
 }
 
 /*  Header css  */
@@ -22,12 +16,16 @@ body {
     font-size: 56px;
 }
 
+.container {
+    position: relative;
+}
 
 /*  Menu css  */
 .menu {
-    height: 100%;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
     width: 240px; 
-    float: left;
     padding: 20px;
     background: #f7f7f7;
     color: #444444;
@@ -54,18 +52,39 @@ dt {
 
 /*  Content css  */ 
 .content {
-    background: #fff;
-    float: left;
-    margin-left: 35px;
+    background: #fefeff;
+    padding-left: 315px;
+    min-height: 500px;
 }
 
 h1 {
+    margin: 0;
+    padding-top: 21.44px;
+    padding-bottom: 21.44px;
     font-weight: 400;
+    color: #2979ff;
+}
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+img {
+    border: 1px solid #e0e0e0; /* Media Query */
+}
+p {
+    margin: 0;
+    width: 600px; /* Media Query */
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 13px;
+    line-height: 24px;
+}
+.resume-link {
+    border-bottom: 1px solid;
 }
 
 .project-title {
     margin-bottom: 30px;
-    color: #2979ff;
 }
 .project-screenshot {
     margin-bottom: 10px;
