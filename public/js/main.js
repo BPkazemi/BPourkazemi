@@ -1,11 +1,34 @@
-function main() {
-    setMenuClickListeners();
-
+$(document).ready(function() {
     init();
-}
+});
+
 function init() {
-    setSelected("projects");
-    ajax("projects");
+    loadPage(window.location.hash);
+
+    setMenuClickListeners();
+    setHashListener();
+}
+
+function loadPage( hash ) {
+    console.log("loadPage called");
+    switch (hash) {
+        case "#projects":
+            setSelected("projects");
+            ajax("projects");
+            break;
+        case "#about":
+            setSelected("about");
+            ajax("about");
+            break;
+        case "#resume":
+            setSelected("resume");
+            ajax("resume");
+            break;
+        default:
+            setSelected("projects");
+            ajax("projects");
+            break;
+    }
 }
 
 function setMenuClickListeners() {
@@ -18,38 +41,48 @@ function setMenuClickListeners() {
     resume.addEventListener("click", clickHandler("resume"), false);
 }
 
-function clickHandler( route ) {
-    switch (route) {
-        case "about":
-            return function() {
-                setSelected("about");
-                ajax("about");
-            }   
-            break;
-        case "projects":
-            return function() {
-                setSelected("projects");
-                ajax("projects");
+function setHashListener() {
+    if ("onhashchange" in window) {
+        window.onhashchange = function() {
+            console.log("new Hash: " + window.location.hash);
+            loadPage(window.location.hash);
+        }
+    }
+    else { // Event not supported
+        var storedHash = window.location.hash;
+        window.setInterval(function() {
+            if (window.location.hash != storedHash) {
+                storedHash = window.location.hash;
+                loadPage(storedHash);
             }
-            break;
-        case "resume":
-            return function() {
-                setSelected("resume");
-                ajax("resume");
-            }
-            break;
-        default:
-            break;
+        }, 100);
     }
 }
 
 function ajax( route ) {
     $.ajax({
-        url: "/" + route,
+        url: "/api/" + route,
         success: function(response) {
             updateContent(route, response);
         }
     });
+}
+
+function clickHandler( route ) {
+    switch (route) {
+        case "about":
+            return function() { window.location.hash = "about"; }   
+            break;
+        case "projects":
+            return function() { window.location.hash = "projects"; }
+            break;
+        case "resume":
+            return function() { window.location.hash = "resume"; }
+            break;
+        default:
+            return function() { window.location.hash = "projects"; }
+            break;
+    }
 }
 
 function updateContent( page_type, response ) {
@@ -115,6 +148,3 @@ function setSelected( selectThisClass ) {
     }
 }
 
-$(document).ready(function() {
-    main();
-});

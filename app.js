@@ -7,11 +7,11 @@ app.use(compress());
 // Static file-handling
 app.use(express.static(__dirname + '/public'));
 
-app.get('/about', function(req, res) {
+app.get('/api/about', function(req, res) {
     res.json({ "about": "Welcome." });
 });
 
-app.get('/projects', function(req, res) {
+app.get('/api/projects', function(req, res) {
     var projects = [
         { title: "Nassim Taleb Visualization", desc: "Inequality visualization", screenshot_src: "./assets/images/blackswan.png" },
         { title: "Comb", desc: "Converting unsearchable PDFs to searchable ones using OCR. Built with Django, ImageMagick.", screenshot_src: "./assets/images/comb.png" }
@@ -19,7 +19,7 @@ app.get('/projects', function(req, res) {
     res.json({ projects: projects });
 });
 
-app.get('/resume', function(req, res) {
+app.get('/api/resume', function(req, res) {
     res.json({resume: "My resume."});
 });
 
