@@ -89,7 +89,7 @@ function updateContent( page_type, response ) {
                 title = curProject.title;
                 screenshotSrc = curProject.screenshot_src;
                 desc = curProject.desc,
-                link = curProject.link,
+                link = curProject.link || "",
                 type = curProject.type,
                 width = 600; // Default screenshot widths for web projects
 
