@@ -14,7 +14,7 @@ app.get('/api/about', function(req, res) {
 app.get('/api/projects', function(req, res) {
     var projects = [
         { type: "web", title: "Nassim Taleb Visualization", link: "http://blackswan.bpourkazemi.com", desc: "Inequality visualization inspired by \"The Black Swan\". Built with D3.js!", screenshot_src: "./assets/images/blackswan.png" },
-        { type: "web", title: "Comb", link: "http://54.84.74.107:8080/", desc: "Created a webapp to convert unsearchable PDFs to searchable ones using OCR. Built with Django, ImageMagick, and PyTesser. HackUVA Center for Open Science award.", screenshot_src: "./assets/images/comb.png" },
+        { type: "web", title: "Comb", link: "http://54.164.121.182:8080/", desc: "Created a webapp to convert unsearchable PDFs to searchable ones using OCR. Built with Django, ImageMagick, and PyTesser. HackUVA Center for Open Science award.", screenshot_src: "./assets/images/comb.png" },
         { type: "mobile", title: "Rapback (in progress)", link: null, desc: "A social network for making funny rap videos with your friends. On Android and iOS, with a Django backend. Fall '14 release date.", screenshot_src: "./assets/images/Rapback.png" }
     ];
     res.json({ projects: projects });
