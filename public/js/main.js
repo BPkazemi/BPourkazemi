@@ -151,7 +151,6 @@ function createCard( opts ) {
         html = "";
 
     if (link) {
-        // If no link is available, don't add an <a> tag
         html += 
             '<div class="card">' +
                 '<div class="card-title">' +
@@ -165,10 +164,11 @@ function createCard( opts ) {
                 '</div>' +
             '</div>'
     } else {
+        // If no link is available, don't add an <a> tag
         html += 
             '<div class="card">' +
                 '<div class="card-title">' +
-                    '<h1><a href="' + link + '">' + title + '</a></h1>' +
+                    '<h1>' + title + '</h1>' +
                 '</div>' +
                 '<div class="card-screenshot">' +
                     '<img src="' + screenshotSrc + '" width="' + width + '">' +
