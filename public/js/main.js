@@ -2,14 +2,14 @@ $(document).ready(function() {
     init();
 });
 
-function init() {
+function init () {
     loadPage(window.location.hash);
 
     setMenuClickListeners();
     setHashListener();
 }
 
-function loadPage( hash ) {
+function loadPage (hash) {
     switch (hash) {
         case "#projects":
             setSelected("projects");
@@ -26,7 +26,7 @@ function loadPage( hash ) {
     }
 }
 
-function setMenuClickListeners() {
+function setMenuClickListeners () {
     var projects = document.getElementsByClassName('projects')[0],
         resume = document.getElementsByClassName('resume')[0];
 
@@ -34,11 +34,11 @@ function setMenuClickListeners() {
     resume.addEventListener("click", clickHandler("resume"), false);
 }
 
-function setHashListener() {
+function setHashListener () {
     if ("onhashchange" in window) {
         window.onhashchange = function() {
             loadPage(window.location.hash);
-        }
+        };
     }
     else { // Event not supported
         var storedHash = window.location.hash;
@@ -60,17 +60,14 @@ function ajax( route ) {
     });
 }
 
-function clickHandler( route ) {
+function clickHandler (route) {
     switch (route) {
         case "projects":
-            return function() { window.location.hash = "projects"; }
-            break;
+            return function() { window.location.hash = "projects"; };
         case "resume":
-            return function() { window.location.hash = "resume"; }
-            break;
+            return function() { window.location.hash = "resume"; };
         default:
-            return function() { window.location.hash = "projects"; }
-            break;
+            return function() { window.location.hash = "projects"; };
     }
 }
 
@@ -88,9 +85,9 @@ function updateContent( page_type, response ) {
                 curProject = data[i];
                 title = curProject.title;
                 screenshotSrc = curProject.screenshot_src;
-                desc = curProject.desc,
-                link = curProject.link || "",
-                type = curProject.type,
+                desc = curProject.desc;
+                link = curProject.link || "";
+                type = curProject.type;
                 width = 600; // Default screenshot widths for web projects
 
                 // Looks better 
@@ -162,7 +159,7 @@ function createCard( opts ) {
                 '<div class="card-desc">' +
                     '<p>' + desc + '</p>' +
                 '</div>' +
-            '</div>'
+            '</div>';
     } else {
         // If no link is available, don't add an <a> tag
         html += 
@@ -176,7 +173,7 @@ function createCard( opts ) {
                 '<div class="card-desc">' +
                     '<p>' + desc + '</p>' +
                 '</div>' +
-            '</div>'
+            '</div>';
     }
 
     return html;

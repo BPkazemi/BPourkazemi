@@ -1,26 +1,31 @@
 {
-  "name": "BPourkazemi",
-  "version": "0.0.1",
-  "description": "My website http://bpourkazemi.com",
-  "main": "app.js",
+  "name": "website",
+  "version": "1.0.0",
+  "description": "Babak Pourkazemi's website",
+  "main": "server.js",
   "dependencies": {
-    "compression": "^1.0.10",
-    "express": "4.x"
+    "compression": "^1.6.2",
+    "ejs": "^2.4.1",
+    "express": "^4.8.2"
   },
-  "engines": {
-    "node": "0.10.x"
-  },
+  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/BPkazemi/BPourkazemi"
+    "url": "git+https://github.com/bpourkazemi/website.git"
   },
+  "keywords": [
+    "babak",
+    "pourkazemi",
+    "website"
+  ],
   "author": "Babak Pourkazemi",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BPkazemi/BPourkazemi/issues"
+    "url": "https://github.com/bpourkazemi/website/issues"
   },
-  "homepage": "https://github.com/BPkazemi/BPourkazemi"
+  "homepage": "https://github.com/bpourkazemi/website#readme"
 }

@@ -1,0 +1,3 @@
+[submodule "projects/black-swan"]
+	path = projects/black-swan
+	url = https://github.com/bpourkazemi/black-swan
