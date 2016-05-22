@@ -4,14 +4,15 @@
   "description": "Babak Pourkazemi's website",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.15.1",
     "compression": "^1.6.2",
     "ejs": "^2.4.1",
-    "express": "^4.8.2"
+    "express": "^4.8.2",
+    "morgan": "^1.7.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "forever start -o logs/out.log -e logs/err.log server.js"
   },
   "repository": {
     "type": "git",
