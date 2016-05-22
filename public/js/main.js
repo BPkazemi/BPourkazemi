@@ -1,3 +1,5 @@
+const TABS = ['projects', 'bio'];
+
 $(document).ready(function() {
     init();
 });
@@ -10,28 +12,17 @@ function init () {
 }
 
 function loadPage (hash) {
-    switch (hash) {
-        case "#projects":
-            setSelected("projects");
-            ajax("projects");
-            break;
-        case "#bio":
-            setSelected("bio");
-            ajax("bio");
-            break;
-        default:
-            setSelected("projects");
-            ajax("projects");
-            break;
-    }
+    var hashless = hash.substring(1);
+    hashless = TABS.indexOf(hashless) > -1 ? hashless : 'projects';
+    selectTab(hashless);
+    ajax(hashless);
 }
 
 function setMenuClickListeners () {
-    var projects = document.querySelector('dt.projects'),
-        bio = document.querySelector('dt.bio');
-
-    projects.addEventListener("click", clickHandler("projects"), false);
-    bio.addEventListener("click", clickHandler("bio"), false);
+    TABS.forEach(function(tab) {
+        let dt = document.querySelector(`dt.${tab}`);
+        dt.addEventListener("click", () => window.location.hash = tab, false);
+    });
 }
 
 function setHashListener () {
@@ -40,18 +31,9 @@ function setHashListener () {
             loadPage(window.location.hash);
         };
     }
-    else { // Event not supported
-        var storedHash = window.location.hash;
-        window.setInterval(function() {
-            if (window.location.hash != storedHash) {
-                storedHash = window.location.hash;
-                loadPage(storedHash);
-            }
-        }, 100);
-    }
 }
 
-function ajax( route ) {
+function ajax (route) {
     $.ajax({
         url: "/api/" + route,
         success: function(response) {
@@ -60,27 +42,15 @@ function ajax( route ) {
     });
 }
 
-function clickHandler (route) {
-    switch (route) {
-        case "projects":
-            return function() { window.location.hash = "projects"; };
-        case "bio":
-            return function() { window.location.hash = "bio"; };
-        default:
-            return function() { window.location.hash = "projects"; };
-    }
-}
-
-function updateContent( page_type, response ) {
-    var content = document.querySelector("div.content"),
-        data = "",
-        html = "";
+function updateContent (page_type, response) {
+    var content = document.querySelector("div.content");
 
     switch (page_type) {
         case "projects":
-            data = response.projects;
+            var data = response.projects;
             var curProject, title, imgSrc, desc, link, type, width;
 
+            var html = '';
             for (var i = 0; i < data.length; i++) {
                 curProject = data[i];
                 title = curProject.title;
@@ -107,8 +77,8 @@ function updateContent( page_type, response ) {
             content.innerHTML = html;
             break;
         case "bio":
-            data = response.bio;
-            html = createCard({
+            var data = response.bio;
+            var html = createCard({
                 title: "",
                 imgSrc: 'assets/images/' + data.img_src,
                 width: 500,
@@ -121,17 +91,17 @@ function updateContent( page_type, response ) {
     }
 }
 
-function setSelected( tab ) {
+function selectTab (tab) {
     var dl = document.querySelector('dl.tabs');
 
     [].slice.call(dl.children).forEach(function(child) {
         child.className = (child.className.indexOf(tab) > -1) ?
             child.className + ' selected' :
-            child.className.replace(new RegExp('selected|\\s', 'g'));
+            child.className.replace(new RegExp('selected|\\s', 'g'), '');
     });
 }
 
-function createCard( opts ) {
+function createCard (opts) {
     var title = opts.title,
         link = opts.link,
         imgSrc = opts.imgSrc,

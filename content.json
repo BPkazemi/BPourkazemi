@@ -4,7 +4,7 @@
             "type": "web",
             "title": "Black Swan Visualization",
             "link": "http://pourkazemi.me/blackswan",
-            "desc": "Inequality visualization inspired by <em>The Black Swan</em>.",
+            "desc": "Inequality visualization inspired by <em>The Black Swan</em>. Click the picture for the demo.",
             "screenshot_src": "./assets/images/blackswan.png"
         },
         {
