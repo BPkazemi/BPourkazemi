@@ -3,7 +3,7 @@
         {
             "type": "web",
             "title": "Nassim Taleb Visualization",
-            "link": "http://blackswan.bpourkazemi.com",
+            "link": "http://pourkazemi.me/blackswan",
             "desc": "Inequality visualization inspired by \"The Black Swan\". Built with D3.js!",
             "screenshot_src": "./assets/images/blackswan.png"
         },

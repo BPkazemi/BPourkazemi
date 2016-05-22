@@ -109,7 +109,7 @@ function updateContent( page_type, response ) {
         case "bio":
             data = response.bio;
             html = createCard({
-                title: "Bio",
+                title: "",
                 imgSrc: 'assets/images/' + data.img_src,
                 width: 500,
                 desc: data.desc
