@@ -34,6 +34,7 @@ app.get('/blackswan', function(req, res) {
     res.render('black-swan/index.html'); // Point to submodule's html page
 });
 
+// Assume any push event is a push to master
 app.post('/webhooks/push', function(req, res) {
     exec('./pull_and_restart.sh');
 });

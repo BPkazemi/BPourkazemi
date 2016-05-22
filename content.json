@@ -15,15 +15,15 @@
             "screenshot_src": "./assets/images/comb.png" },
         {
             "type": "mobile",
-            "title": "Rapback (in progress)",
+            "title": "Rapback",
             "link": null,
-            "desc": "A social network for making funny rap videos with your friends. On Android and iOS, with a Django backend. Fall '14 release date.",
+            "desc": "A social network for making rap videos with your friends. Android and iOS.",
             "screenshot_src": "./assets/images/Rapback.png"
         }
     ],
 
     "bio": {
         "img_src": "profile_pic.jpg",
-        "desc": "I'm an Iranian, American, software engineer, Addthis intern, Yahoo employee, Virginian, Charlotesvillian, San Franciscan, drummer, half-marathoner, son, uncle, and and bilingual person."
+        "desc": "I am a software engineer at Yahoo helping create their new line of mobile search products. Specifically, I help build the application server, and primarily write code in Scala, Java, and Javascript. Before Yahoo, I interned at AddThis (later acquired by Oracle) and graduated UVA in 2015 (Bachelors in Computer Science). My email is bp5xj @ virginia.edu"
     }
 }
