@@ -15,9 +15,9 @@ function loadPage (hash) {
             setSelected("projects");
             ajax("projects");
             break;
-        case "#resume":
-            setSelected("resume");
-            ajax("resume");
+        case "#bio":
+            setSelected("bio");
+            ajax("bio");
             break;
         default:
             setSelected("projects");
@@ -28,10 +28,10 @@ function loadPage (hash) {
 
 function setMenuClickListeners () {
     var projects = document.getElementsByClassName('projects')[0],
-        resume = document.getElementsByClassName('resume')[0];
+        bio = document.getElementsByClassName('bio')[0];
 
     projects.addEventListener("click", clickHandler("projects"), false);
-    resume.addEventListener("click", clickHandler("resume"), false);
+    bio.addEventListener("click", clickHandler("bio"), false);
 }
 
 function setHashListener () {
@@ -64,8 +64,8 @@ function clickHandler (route) {
     switch (route) {
         case "projects":
             return function() { window.location.hash = "projects"; };
-        case "resume":
-            return function() { window.location.hash = "resume"; };
+        case "bio":
+            return function() { window.location.hash = "bio"; };
         default:
             return function() { window.location.hash = "projects"; };
     }
@@ -79,12 +79,12 @@ function updateContent( page_type, response ) {
     switch (page_type) {
         case "projects":
             data = response.projects;
-            var curProject, title, screenshotSrc, desc, link, type, width;
+            var curProject, title, imgSrc, desc, link, type, width;
 
             for (var i = 0; i < data.length; i++) {
                 curProject = data[i];
                 title = curProject.title;
-                screenshotSrc = curProject.screenshot_src;
+                imgSrc = curProject.screenshot_src;
                 desc = curProject.desc;
                 link = curProject.link || "";
                 type = curProject.type;
@@ -98,7 +98,7 @@ function updateContent( page_type, response ) {
                 html += createCard({
                     title: title,
                     link: link,
-                    screenshotSrc: screenshotSrc,
+                    imgSrc: imgSrc,
                     width: width,
                     desc: desc
                 });
@@ -106,14 +106,13 @@ function updateContent( page_type, response ) {
 
             content.innerHTML = html;
             break;
-        case "resume":
-            data = response.resume.resume_src;
+        case "bio":
+            data = response.bio;
             html = createCard({
-                title: "Resume",
-                link: data,
-                screenshotSrc: "assets/images/Resume.png",
-                width: 600,
-                desc: ''
+                title: "Bio",
+                imgSrc: 'assets/images/' + data.img_src,
+                width: 500,
+                desc: data.desc
             });
             content.innerHTML = html;
             break;
@@ -123,7 +122,7 @@ function updateContent( page_type, response ) {
 }
 
 function setSelected( selectThisClass ) {
-    var menuOptions = ["projects", "resume"],
+    var menuOptions = ["projects", "bio"],
         curClass,
         curOption;
 
@@ -131,18 +130,15 @@ function setSelected( selectThisClass ) {
         curClass = menuOptions[i];
         curOption = document.getElementsByClassName(curClass)[0];
 
-        if(curClass == selectThisClass) {
-            curOption.className = curClass + " selected";
-        } else {
-            curOption.className = curClass;
-        }
+        curOption.className = (curClass == selectThisClass) ?
+            curClass : curClass + ' selected';
     }
 }
 
 function createCard( opts ) {
     var title = opts.title,
         link = opts.link,
-        screenshotSrc = opts.screenshotSrc,
+        imgSrc = opts.imgSrc,
         desc = opts.desc,
         width = opts.width,
         html = "";
@@ -154,7 +150,7 @@ function createCard( opts ) {
                     '<h1><a href="' + link + '">' + title + '</a></h1>' +
                 '</div>' +
                 '<div class="card-screenshot">' +
-                    '<a href="' + link + '">' + '<img src="' + screenshotSrc + '" width="' + width + '"></a>' +
+                    '<a href="' + link + '">' + '<img src="' + imgSrc + '" width="' + width + '"></a>' +
                 '</div>' +
                 '<div class="card-desc">' +
                     '<p>' + desc + '</p>' +
@@ -168,7 +164,7 @@ function createCard( opts ) {
                     '<h1>' + title + '</h1>' +
                 '</div>' +
                 '<div class="card-screenshot">' +
-                    '<img src="' + screenshotSrc + '" width="' + width + '">' +
+                    '<img src="' + imgSrc + '" width="' + width + '">' +
                 '</div>' +
                 '<div class="card-desc">' +
                     '<p>' + desc + '</p>' +

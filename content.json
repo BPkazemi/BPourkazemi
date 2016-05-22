@@ -1,0 +1,29 @@
+{
+    "projects": [
+        {
+            "type": "web",
+            "title": "Nassim Taleb Visualization",
+            "link": "http://blackswan.bpourkazemi.com",
+            "desc": "Inequality visualization inspired by \"The Black Swan\". Built with D3.js!",
+            "screenshot_src": "./assets/images/blackswan.png"
+        },
+        {
+            "type": "web",
+            "title": "Comb",
+            "link": null,
+            "desc": "Created a webapp to convert unsearchable PDFs to searchable ones using OCR. Built with Django, ImageMagick, and PyTesser. HackUVA Center for Open Science award.",
+            "screenshot_src": "./assets/images/comb.png" },
+        {
+            "type": "mobile",
+            "title": "Rapback (in progress)",
+            "link": null,
+            "desc": "A social network for making funny rap videos with your friends. On Android and iOS, with a Django backend. Fall '14 release date.",
+            "screenshot_src": "./assets/images/Rapback.png"
+        }
+    ],
+
+    "bio": {
+        "img_src": "profile_pic.jpg",
+        "desc": "I'm an Iranian, American, software engineer, Addthis intern, Yahoo employee, Virginian, Charlotesvillian, San Franciscan, drummer, half-marathoner, son, uncle, and and bilingual person."
+    }
+}
