@@ -27,8 +27,8 @@ function loadPage (hash) {
 }
 
 function setMenuClickListeners () {
-    var projects = document.getElementsByClassName('projects')[0],
-        bio = document.getElementsByClassName('bio')[0];
+    var projects = document.querySelector('dt.projects'),
+        bio = document.querySelector('dt.bio');
 
     projects.addEventListener("click", clickHandler("projects"), false);
     bio.addEventListener("click", clickHandler("bio"), false);
@@ -72,7 +72,7 @@ function clickHandler (route) {
 }
 
 function updateContent( page_type, response ) {
-    var content = document.getElementsByClassName("content")[0],
+    var content = document.querySelector("div.content"),
         data = "",
         html = "";
 
@@ -121,18 +121,14 @@ function updateContent( page_type, response ) {
     }
 }
 
-function setSelected( selectThisClass ) {
-    var menuOptions = ["projects", "bio"],
-        curClass,
-        curOption;
+function setSelected( tab ) {
+    var dl = document.querySelector('dl.tabs');
 
-    for( var i = 0 ; i < menuOptions.length; i++) {
-        curClass = menuOptions[i];
-        curOption = document.getElementsByClassName(curClass)[0];
-
-        curOption.className = (curClass == selectThisClass) ?
-            curClass : curClass + ' selected';
-    }
+    [].slice.call(dl.children).forEach(function(child) {
+        child.className = (child.className.indexOf(tab) > -1) ?
+            child.className + ' selected' :
+            child.className.replace(new RegExp('selected|\\s', 'g'));
+    });
 }
 
 function createCard( opts ) {

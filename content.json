@@ -24,6 +24,6 @@
 
     "bio": {
         "img_src": "profile_pic.jpg",
-        "desc": "I am a software engineer at Yahoo helping create their new line of mobile search products. Specifically, I help build the application server, and primarily write code in Scala, Java, and Javascript. Before Yahoo, I interned at AddThis (later acquired by Oracle) and graduated UVA in 2015 after earning my Bachelors in CS. My email is bp5xj @ virginia.edu."
+        "desc": "I am a software engineer at Yahoo helping create their new line of mobile search products. Specifically, I help build application servers, and primarily write code in Scala, Java, and Javascript. Before Yahoo, I interned at AddThis (later acquired by Oracle) and graduated UVA in 2015 (BS CS). My email is bp5xj @ virginia.edu."
     }
 }
