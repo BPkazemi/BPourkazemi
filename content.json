@@ -2,16 +2,16 @@
     "projects": [
         {
             "type": "web",
-            "title": "Nassim Taleb Visualization",
+            "title": "Black Swan Visualization",
             "link": "http://pourkazemi.me/blackswan",
-            "desc": "Inequality visualization inspired by \"The Black Swan\". Built with D3.js!",
+            "desc": "Inequality visualization inspired by <em>The Black Swan</em>.",
             "screenshot_src": "./assets/images/blackswan.png"
         },
         {
             "type": "web",
             "title": "Comb",
             "link": null,
-            "desc": "Created a webapp to convert unsearchable PDFs to searchable ones using OCR. Built with Django, ImageMagick, and PyTesser. HackUVA Center for Open Science award.",
+            "desc": "A webapp that makes PDFs searchable using OCR. Winner of HackUVA's Center for Open Science award.",
             "screenshot_src": "./assets/images/comb.png" },
         {
             "type": "mobile",
@@ -24,6 +24,6 @@
 
     "bio": {
         "img_src": "profile_pic.jpg",
-        "desc": "I am a software engineer at Yahoo helping create their new line of mobile search products. Specifically, I help build the application server, and primarily write code in Scala, Java, and Javascript. Before Yahoo, I interned at AddThis (later acquired by Oracle) and graduated UVA in 2015 (Bachelors in Computer Science). My email is bp5xj @ virginia.edu"
+        "desc": "I am a software engineer at Yahoo helping create their new line of mobile search products. Specifically, I help build the application server, and primarily write code in Scala, Java, and Javascript. Before Yahoo, I interned at AddThis (later acquired by Oracle) and graduated UVA in 2015 after earning my Bachelors in CS. My email is bp5xj @ virginia.edu."
     }
 }

@@ -11,27 +11,39 @@ var app = express();
 
 ///////////// Middleware
 app.use(compress());  // gzip static files
+
 app.use(bodyParser.json());
+
 var accessLogStream = fs.createWriteStream(__dirname + '/logs/out.log', {flags: 'a'})
 app.use(morgan('dev', {stream: accessLogStream}));
+
 app.use(express.static(__dirname + '/public'));
 app.use('/blackswan', express.static(__dirname + '/projects/black-swan'));
+
 
 ///////////// Config
 app.engine('html', ejs.renderFile);
 app.set('views', __dirname + '/projects');
 
+
 ///////////// Routing
 app.get('/api/projects', function(req, res) {
-    res.json({ projects: content.projects });
+    fs.readFile('./content.json', function(err, data) {
+        var content = JSON.parse(data);
+        res.json({ projects: content.projects});
+    });
 });
 
 app.get('/api/bio', function(req, res) {
-    res.json({ bio: content.bio });
+    fs.readFile('./content.json', function(err, data) {
+        var content = JSON.parse(data);
+        res.json({ bio: content.bio });
+    });
 });
 
 app.get('/blackswan', function(req, res) {
-    res.render('black-swan/index.html'); // Point to submodule's html page
+    // Point to submodule's page
+    res.render('black-swan/index.html');
 });
 
 // Assume any push event is a push to master
