@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Face Detector</title>
+</head>
+<body>
+    <div>
+        <h1>Face Detector</h1>
+        <h2>Results - Linear Classifier</h2>
+        <h3>Collages</h3>
+        <p style="width:950px;">The top half of each are the faces, and the bottom half non-faces. I included 'pseudo-faces' in my training set's non-faces so that "nearby" faces wouldn't classify as faces.</p>
+        <table>
+            <tbody>
+                <tr>
+                    <td><img src="./assets/images/face-detector/training_set_collage.png"></td>
+                    <td><img src="./assets/images/face-detector/untrained_set_collage.png"></td>
+                </tr>
+                <tr>
+                    <td>Training Set</td>
+                    <td>Untrained Set</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Image Classification</h3>
+        <p style="width:950px;">
+        The linear classifier works PERFECTLY on the training data. I suppose this makes sense, since the weights are tuned *exactly* for those 200 images. Specifically, accuracy on faces, non-faces, and total accuracy are all 100%. The code at the end of the linear_classifier() function performs the actual testing.
+
+        On unseen data, the linear classifier performs worse but still pretty good. 83% accuracy on detecting new faces, 85% on detecting new non-faces, so 84% accurate overall.
+        </p>
+        <p style="width:950px;">
+        Some results
+        </p>
+        <table border="1" style="width:800px;">
+            <tbody>
+                <tr>
+                    <td><img src="assets/images/face-detector/classifyimg_random_trainingfaces.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/classifyimg_random_newfaces.png" width="350"></td>
+                </tr>
+                <tr>
+                    <td align="center">These 4 12x12 patches were taken from the training dataset. 3 are faces, but the bottom-right one should NOT be a face. It is being incorrectly categorized</td>
+                    <td align="center">These 4 12x12 patches were NEW to the classifier. Same structure as before - the bottom right one is being incorrectly categorized as a face.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="width:950px;">
+        More images below!
+        </p>
+
+        <h3>Nonmaximum Suppression</h3>
+        <p style="width:950px;">
+        This table is one of my favorites. GREEN boxes represent the bounding box, RED boxes represent all the patches that didn't survive the nonmaximum suppression test (i.e., the results from classify_image), and BLUE boxes represent all the patches that did survive the test. The first image will show the RED and BLUE boxes, while the second image will only show the BLUE boxes.
+
+        What's clear here is that a "good" MxM box highly depends on the content of the image. If we have a faces that are well spread out, then a larger M will work better. But if we have a crowded picture, a smaller M will segment the faces better.
+        </p>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td><img src="assets/images/face-detector/nonmaxsup_m10_bluebbox.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/nonmaxsup_m10_bluebbox_only.png" width="350"></td>
+                </tr>
+                <tr>
+                    <td align="center">M=10</td>
+                    <td align="center">M=10</td>
+                </tr>
+                <tr>
+                    <td><img src="assets/images/face-detector/nonmaxsup_m15_bluebbox.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/nonmaxsup_m15_bluebbox_only.png" width="350"></td>
+                </tr>
+                <tr>
+                    <td align="center">M=15</td>
+                    <td align="center">M=15</td>
+                </tr>
+                <tr>
+                    <td><img src="assets/images/face-detector/nonmaxsup_m30_bluebbox.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/nonmaxsup_m30_bluebbox_only.png" width="350"></td>
+                </tr>
+                <tr>
+                    <td align="center">M=30</td>
+                    <td align="center">M=30</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="width:950px;">
+        Finally, here's nonmax suppression on an image with a face far larger than what a 12x12 patch can detect. In fact, the linear classifier looks like a great edge detector! Possibly even a good corner detector.
+        </p>
+        <table>
+            <tbody>
+                <tr>
+                    <td><img src="assets/images/face-detector/nonmaxsup_audrey_m15_bluebbox.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/nonmaxsup_audrey_m60_bluebbox.png" width="350"></td>
+                </tr>
+                <tr>
+                    <td align="center">M=15</td>
+                    <td align="center">M=60</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Gaussian Pyramids</h3>
+        <p style="width:800px">
+        Here we have a picture of Audrey, which is obviously far larger than anything in our training set. My gaussian pyramid implementation performs nonmax suppression - otherwise there would be too many patches. The original image is scale 0, and the smallest image is the highest scale. Larger scales (smaller images) show as larger patches because that's what they would scale to if we scaled back to the original image. The colors are randomly determined, but consistent across scales, so that you can easily make out different scales.
+        </p>
+
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td><img src="assets/images/face-detector/pyramid_audrey_m30_4scales.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/pyramid_audrey_m30_6scales.png" width="350"></td>
+                </tr>
+                <tr>
+                    <td align="center">M=30, num_scales=4</td>
+                    <td align="center">M=30, num_scales=6</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="width:950px;">
+        Adding more scales, in this case, doesn't seem to have done much. However, it does seem to get better, since we see a new patch from one of the larger scales appear on Audrey's forehead, and this patch is the closest thing to fully detecting the face.
+        </p>
+        <h3>More Analysis</h3>
+        <p style="width:950px;">
+        I've changed my linear classifier's training phase to stop after a desired accuracy has been reached. So I'm NOT doing it by raw number of iterations, which I found inefficient. Instead, I calculate how accurately "w" predicts the training data after each update, and stop when a desired accuracy is met. I found this to be reasonably effective. A problem arises if the linear classifier can find no such decision boundary to satisfy the desired accuracy threshold. Fortunately, for our relatively simple test cases I have yet to run into such a problem. In production systems, this problem is overcome by terminating once accuracy plateaus. 
+        </p>
+
+        <p style="width:950px;">
+        I plotted my linear classifier's accuracy as a function of iterations during the training phase, and with an accuracy threshold of 1.0 (that is, the classifier will keep training until it can perfectly predict the training data), we get a *very* interesting result:
+        </p>
+        <img src="assets/images/face-detector/classifier_accuracy_at1.png">
+        <p style="width:950px;">
+        Notice how the classifier goes through waves of "setback" before coming back stronger than before. This seemed odd to me, but the overrall relationship between iterations and accuracy is strongly positive. Here are some statistics relating iterations to accuracy. They validate our intuitions:
+        </p>
+        <p style="width:950px;">
+        Lastly, there's a discussion to be had on the learning rate - alpha. I played around with this number a lot, but got surprising results. The learning rate didn't affect the number of iterations of the algorithm until it was 1e-14. From 1e-14 to 1e-17, the number of iterations (for the most part) actually DECREASED. You heard right! A *smaller* learning rate resulted in *fewer* iterations. Odd. However, from 1e-19 onwards, the number of iterations began increasing at an exponential rate. Turns out the culprit is the weight matrix w. I closely monitored the value of w.dot(xi) through these tests, and though w.dot(xi) affects w, it barely changes the results of our linear classifier function g(). In other words, w.dot(xi) must be disproportionality changed to have any effect on our classifier function g(). This occurs precisely from alpha=1e-14. It was an interesting effect to play around with, though I'm not sure if it's normal for the learning rate to be so vanishingly small.
+        </p>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <th>Accuracy Threshold</th>
+                    <th>Number of Iterations</th>
+                </tr>
+                <tr>
+                    <td>0.9</td>
+                    <td>69</td>
+                </tr>
+                <tr>
+                    <td>0.95</td>
+                    <td>186</td>
+                </tr>
+                <tr>
+                    <td>0.99</td>
+                    <td>344</td>
+                </tr>
+                <tr>
+                    <td>1.0</td>
+                    <td>710</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Results - Gaussian Classifier</h2>
+        For all the below, unless specified otherwise, the k-value for the face gaussian is 30, and the k-value for the non-face gaussian is 23. Later on, I found better-fitting k-values (see below).
+
+        <h3>Average Face & Non Face</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <td><img src="assets/images/face-detector/avg_face.png"></td>
+                    <td><img src="assets/images/face-detector/avg_nface.png"></td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="width:950px;">
+        As creepy as it looks, the left image does *look* like a face patch, and the right one looks like noise. Success!
+        </p>
+        <h3>Adding Priors</h3>
+        <p style="width:950px;">
+        I've also extended my Gaussian classifier to include priors. Because we don't have access to enough data to establish what these priors are, I simply guessed. Then I ran some tests to see which tests worked best. Here are the results:
+        <table border="1">
+            <tbody>
+                <tr>
+                    <th>P[Face]</th>
+                    <th>Accuracy on Faces</th>
+                    <th>Accuracy on NonFaces</th>
+                    <th>Accuracy Overall</th>
+                </tr>
+                <tr>
+                    <td>0.1%</td>
+                    <td>55%</td>
+                    <td>99%</td>
+                    <td>77%</td>
+                </tr>
+                <tr>
+                    <td>10%</td>
+                    <td>82%</td>
+                    <td>94%</td>
+                    <td>88%</td>
+                </tr>
+                <tr>
+                    <td>50%</td>
+                    <td>90%</td>
+                    <td>91%</td>
+                    <td>90.5%</td>
+                </tr>
+                <tr>
+                    <td>75%</td>
+                    <td>93%</td>
+                    <td>88%</td>
+                    <td>90.5%</td>
+                </tr>
+                <tr>
+                    <td>100%</td>
+                    <td>100%</td>
+                    <td>0%</td>
+                    <td>50%</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="width:950px;">
+        The best priors, for my "unseen" dataset, is 50%. This makes sense, since my unseen dataset is half faces and half non-faces. In the real world, though, this isn't the case. After fudging with the number for a while, I found P[face] = 1% to work pretty well with new data. Here's the difference on an image that has 3 previously unseen faces and 1 previously unseen nonface:
+        </p>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td><img src="./assets/images/face-detector/nonmax_gaussian_prior5_m30_bluebbox.png" style="width:400px;"></td>
+                    <td><img src="./assets/images/face-detector/nonmax_gaussian_prior1_m30_bluebbox.png" style="width:400px;"></td>
+                    <td><img src="./assets/images/face-detector/nonmax_gaussian_prior01_m30_bluebbox.png" style="width:400px;"></td>
+                </tr>
+                <tr>
+                    <td>prior_face=0.5, M=30, k_faces=43, k_nfaces=43</td>
+                    <td>prior_face=0.1, M=30, k_faces=43, k_nfaces=43</td>
+                    <td>prior_face=0.01, M=30, k_faces=43, k_nfaces=43</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="width:950px;">
+        Notice how, as the prior goes from 0.5 to 0.1, the lower-left patch becomes more accurate. Going from 0.1 to 0.01, we see an even bigger difference, the non-face patch is no longer falsely detected as a face! This is HUGE! We're saying that a face patch appears only in 1% of photos, so if we want to detect something as a face, then it needs to overcome the tremendous 99% bias against it. Yet, here we have 4 pictures and they all work perfectly!
+        </p>
+        <p style="width:950px;">
+        Here we see the results on our entire untrained and trained collage. The differences here are smaller. Perhaps the crampedness of the collage changes the utility of our prior. The first row is on our untrained collage, and the second row is on our training collage.
+        </p>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td><img style="width:300px;"src="./assets/images/face-detector/nonmax_gaussian_untrained_collage_prior5_m30_bluebbox.png" style="width:400px;"></td>
+                    <td><img src="./assets/images/face-detector/nonmax_gaussian_untrained_collage_prior01_m30_bluebbox.png" style="width:300px;"></td>
+                </tr>
+                <tr>
+                    <td>prior_face=0.5, M=30, k_faces=43, k_nfaces=43</td>
+                    <td>prior_face=0.1, M=30, k_faces=43, k_nfaces=43</td>
+                </tr>
+                <tr>
+                    <td><img src="./assets/images/face-detector/nonmax_gaussian_training_collage_prior5_m30_bluebbox.png" style="width:300px;"></td>
+                    <td><img src="./assets/images/face-detector/nonmax_gaussian_training_collage_prior01_m30_bluebbox.png" style="width:300px;"></td>
+                </tr>
+                <tr>
+                    <td>prior_face=0.01, M=30, k_faces=43, k_nfaces=43</td>
+                    <td>prior_face=0.01, M=30, k_faces=43, k_nfaces=43</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="width:950px;">
+        Please note that none of the rest of my analysis used these priors. I added priors only AFTER doing the below analysis. They can be considered with prior probability 0.5.
+        </p>
+        <h3>Image Classification</h3>
+        <p style="width:950px;">
+        With k_face = 30 and k_nface = 23:
+        On the training data, the classifier is 61% effective overall, detecting faces 67% of the time and non-faces 55% of the time.
+
+        On new, unseen data, I tested the Gaussian classifier on a variety of different k-values. I've summarized them in the table below.
+        </p>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <th>(k_face, k_nonface)</th>
+                    <th>Accuracy detecting unseen faces</th>
+                    <th>Accuracy detecting unseen nonfaces</th>
+                    <th>Accuracy overall</th>
+                </tr>
+                <tr>
+                    <td>(5, 8)</td>
+                    <td>100%</td>
+                    <td>6%</td>
+                    <td>53%</td>
+                </tr>
+                <tr>
+                    <td>(5, 23)</td>
+                    <td>100%</td>
+                    <td>1%</td>
+                    <td>50.5%</td>
+                </tr>
+                <tr>
+                    <td>(41, 41)</td>
+                    <td>89%</td>
+                    <td>89%</td>
+                    <td>89%</td>
+                </tr>
+                <tr>
+                    <td>(42, 42)</td>
+                    <td>90%</td>
+                    <td>91%</td>
+                    <td>90.5%</td>
+                </tr>
+                <tr>
+                    <td>(43, 43)</td>
+                    <td>90%</td>
+                    <td>91%</td>
+                    <td>90.5%</td>
+                </tr>
+                <tr>
+                    <td>(44, 44)</td>
+                    <td>91%</td>
+                    <td>90%</td>
+                    <td>90.5%</td>
+                </tr>
+                <tr>
+                    <td>(50, 50)</td>
+                    <td>89%</td>
+                    <td>89%</td>
+                    <td>89%</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="width:950px;">
+        It seems the pairs (42, 42) and (43, 43) seem to do pretty well. Interestingly, (5, 8) and (5, 23) results in having the classifier guess FACE nearly every time. 
+
+        What's so interesting here is how much the results vary depending on the k-values. Overall accuracy of 90.5% even beats our linear classifier!!
+
+        I picked 5, 8, 23, and 30 because that's where it seemed the biggest "knees" in my graph were (see below discussion on k-values). 
+
+        I picked the low 40s based on wikipedia's recommendation from their article on <a href="http://en.wikipedia.org/wiki/eigenface">eigenfaces</a>, which recommends 43 to capture "95%" of the total variation in the faces. Lo and behold, 43 did turn out to be a good value! To make sure this wasn't a fluke, I tested from k values from 41 to 44, and also 50 (for good measure).
+        </p>
+        <b>Discussion on k-values</b>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td><img src="assets/images/face-detector/sval_knee_at_8_and_30.png" width=400 /></td>
+                    <td><img src="assets/images/face-detector/sval_knee_at_30_zoom3.png" width=400 /></td>
+                </tr>
+                <tr>
+                    <td>k values for faces. The markers are at x=8 and x=30, which both seemed like "knees".</td>
+                    <td>The same thing, but zoomed in by trimming the first 3 values. Marker at x=30.</td>
+                </tr>
+                <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+                <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+                <tr>
+                    <td><img src="assets/images/face-detector/sval_notface_knee_at_5.png" width=400 /></td>
+                    <td><img src="assets/images/face-detector/sval_notface_knee_at_23_zoom3.png" width=400 /></td>
+                </tr>
+                <tr>
+                    <td>k values for non-faces. The marker is at x=5</td>
+                    <td>The same as before, but zoomed in by trimming the first 3 values. The marker is at k=23.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Nonmaximum Suppression</h3>
+        <p style="width:950px;">
+        The same patterns apply here as above. However, we can tell our Gaussian doesn't work quite as well as the linear classifier here!
+        </p>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td><img src="assets/images/face-detector/nonmaxsup_gaussian_m10_bluebbox.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/nonmaxsup_gaussian_m10_bluebbox_only.png" width="350"></td>
+                </tr>
+                <tr>
+                    <td align="center">M=10</td>
+                    <td align="center">M=10</td>
+                </tr>
+                <tr>
+                    <td><img src="assets/images/face-detector/nonmaxsup_gaussian_m15_bluebbox.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/nonmaxsup_gaussian_m15_bluebbox_only.png" width="350"></td>
+                </tr>
+                <tr>
+                    <td align="center">M=15</td>
+                    <td align="center">M=15</td>
+                </tr>
+                <tr>
+                    <td><img src="assets/images/face-detector/nonmaxsup_gaussian_m30_bluebbox.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/nonmaxsup_gaussian_m30_bluebbox_only.png" width="350"></td>
+                </tr>
+                <tr>
+                    <td align="center">M=30</td>
+                    <td align="center">M=30</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Gaussian Pyramids</h3>
+        <p style="width:950px;">
+        See above discussion. The Gaussian detector is quite ineffective here! Larger scales for small images really throw it off. The rightmost image is a 60x60 image - quite small to begin with - and scaling it down to a 10x10 image causes the detector to incorrectly fire off a detected face at a large scale. Our scales should be appropriate to how large the input image is.
+        </p>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td><img src="assets/images/face-detector/pyramid_gaussian_audrey_m30_6scales.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/pyramid_gaussian_audrey_m50_6scales.png" width="350"></td>
+                    <td><img src="assets/images/face-detector/pyramid_gaussian_randomfaces_m30_4scales.png" width="350"></td>
+                </tr>
+                <tr>
+                    <td align="center">M=30, num_scales=6</td>
+                    <td align="center">M=50, num_scales=6</td>
+                    <td align="center">M=30, num_scales=4</td>
+                </tr>
+            </tbody>
+        </table>
+    <h2>Conclusions</h2>
+    <p>
+    Overall, it seems the linear classifier is more "stable". However, the Gaussian seems to have more potential. And by the end, it finally seems like I was able to wrestle enough accuracy out of the Gaussian to rival the linear classifier. With more data and fine tuning, I'm confident the Gaussian classifier can be improved.
+    </p>
+</body>
+</html>

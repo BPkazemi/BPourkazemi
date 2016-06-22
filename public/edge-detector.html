@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edge & Corner Detector</title>
+</head>
+<body>
+    <div>
+        <h1>Edge & Corner Detector</h1>
+        <div>
+            <h2>Analysis</h2>
+            <p>Edge - Successful edge detection depends on the particulars of the input image and the sigma used. For constant sigma, certain images (those with sudden intensity changes) show edges best. See checkers.jpg below. A smaller sigma removes fewer frequencies, resulting in more edges (and noise!) appearing. In other words, increasing sigma retains "stronger" edges.</p>
+            <p>Corner - The same sigma findings apply to corner detection. Furthermore, we have a new parameter: chain thresholds. Higher thresholds = fewer detected points.</p>
+        </div>
+        <h3>Results</h2>
+        <ol>
+            <li> Canny Edge Detector
+                <table border="1">
+                    <tbody>
+                        <tr>
+                            <td><img src="assets/images/edge-detector/edge_building_fx.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/edge_building_fy.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/edge_building_f.jpg" width="500"></td>
+                        </tr>
+                        <tr>
+                            <td align="center">Horizontal Gradient, <code>sigma = 0.5</code></td>
+                            <td align="center">Vertical Gradient, <code>sigma = 0.5</code></td>
+                            <td align="center">Gradient Magnitude, <code>sigma = 0.5</code></td>
+                        </tr>
+                        <tr>
+                            <td><img src="assets/images/edge-detector/edge_mandrill_fx.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/edge_mandrill_fy.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/edge_mandrill_f.jpg" width="500"></td>
+                        </tr>
+                        <tr>
+                            <td align="center">Horizontal Gradient, <code>sigma = 0.5</code></td>
+                            <td align="center">Vertical Gradient, <code>sigma = 0.5</code></td>
+                            <td align="center">Gradient Magnitude, <code>sigma = 0.5</code></td>
+                        </tr>
+                        <tr>
+                            <td><img src="assets/images/edge-detector/edge_checkers_fx.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/edge_checkers_fy.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/edge_checkers_f.jpg" width="500"></td>
+                        </tr>
+                        <tr>
+                            <td align="center">Horizontal Gradient, <code>sigma = 0.5</code></td>
+                            <td align="center">Vertical Gradient, <code>sigma = 0.5</code></td>
+                            <td align="center">Gradient Magnitude, <code>sigma = 0.5</code></td>
+                        </tr>
+                        <tr>
+                            <td><img src="assets/images/edge-detector/edge_building1.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/edge_building2.jpg" width="500"></td>
+                        </tr>
+                        <tr>
+                            <td align="center"><code>sigma = 1.0</code></td>
+                            <td align="center"><code>sigma = 0.5</code></td>
+                        </tr>
+                        <tr>
+                            <td><img src="assets/images/edge-detector/edge_mandrill1.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/edge_mandrill2.jpg" width="500"></td>
+                        </tr>
+                        <tr>
+                            <td align="center"><code>sigma = 1.0</code></td>
+                            <td align="center"><code>sigma = 0.5</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>
+                <div>Tomasi Kanade Corner Detector</div>
+                <table border="1">
+                    <tbody>
+                        <b>Squint to see some of these!</b>
+                        <tr>
+                            <td><img src="assets/images/edge-detector/corner_building1.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/corner_checkers1.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/corner_mandrill1.jpg" width="500"></td>
+                        </tr>
+                        <tr>
+                            <td align="center">Building,  <code>sigma = 0.5</code></td>
+                            <td align="center">Checkers,  <code>sigma = 0.5</code></td>
+                            <td align="center">Mandrill,  <code>sigma = 0.5</code></td>
+                        </tr>
+                        <tr>
+                            <td><img src="assets/images/edge-detector/corner_mandrill1.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/corner_mandrill_t02.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/corner_mandrill_t04.jpg" width="500"></td>
+                        </tr>
+                        <tr>
+                            <td align="center">Mandrill,  <code>threshold_low = 0.01, sigma = 0.5</code></td>
+                            <td align="center">Mandrill,  <code>threshold_low = 0.02, sigma = 0.5</code></td>
+                            <td align="center">Mandrill,  <code>threshold_low = 0.04, sigma = 0.5</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>
+                <div>Other</div>
+                <table border="1">
+                    <tbody>
+                        <tr>
+                            <td><img src="assets/images/edge-detector/flickr1.jpg" width="500"></td>
+                            <td><img src="assets/images/edge-detector/edge_flickr.jpg" width="500"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+        </ol>
+    </div>
+</body>
+</html>

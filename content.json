@@ -1,10 +1,31 @@
 {
     "projects": [
         {
+            "type": "mobile",
+            "title": "Face Detector",
+            "link": "http://pourkazemi.me/face-detector.html",
+            "desc": "Linear and Gaussian face detectors for computer vision (CS 6501). Click image for details (warning: contains grammatical errors).",
+            "screenshot_src": "./assets/images/face-detector/screenshot.png"
+        },
+        {
+            "type": "web",
+            "title": "Edge & Corner Detector",
+            "link": "http://pourkazemi.me/edge-detector.html",
+            "desc": "Canny edge and Tomasi-Kanade corner detector for computer vision (CS 6501). Click image for details.",
+            "screenshot_src": "./assets/images/edge-detector/screenshot.png"
+        },
+        {
+            "type": "web",
+            "title": "Ray Tracer",
+            "link": "http://pourkazemi.me/ray-tracer.html",
+            "desc": "For computer graphics (CS 4810). Won art contest (class size ~60). Click image for details.",
+            "screenshot_src": "./assets/images/ray-tracer/screenshot.bmp"
+        },
+        {
             "type": "web",
             "title": "Black Swan Visualization",
             "link": "http://pourkazemi.me/blackswan",
-            "desc": "Inequality visualization inspired by <em>The Black Swan</em>. Click the picture for the demo.",
+            "desc": "Inequality visualization inspired by <em>The Black Swan</em>. Click the picture for a demo.",
             "screenshot_src": "./assets/images/blackswan.png"
         },
         {
