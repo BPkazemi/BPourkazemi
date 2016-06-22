@@ -2,6 +2,20 @@
     "projects": [
         {
             "type": "mobile",
+            "title": "Yahoo Radar",
+            "link": "https://itunes.apple.com/us/app/radar-travel-smart/id1107752959?mt=8",
+            "desc": "Worked on the application server for Yahoo's new \"travel virtual assistant\". Ground-up Scala.",
+            "screenshot_src": "./assets/images/yahoo_radar.gif"
+        },
+        {
+            "type": "mobile",
+            "title": "Yahoo Search",
+            "link": "https://itunes.apple.com/us/app/yahoo-search/id361071600?mt=8",
+            "desc": "Worked on the application server for Yahoo's complete refresh of their iOS search app. Ground-up Java 8.",
+            "screenshot_src": "./assets/images/yahoo_search.jpeg"
+        },
+        {
+            "type": "mobile",
             "title": "Face Detector",
             "link": "http://pourkazemi.me/face-detector.html",
             "desc": "Linear and Gaussian face detectors for computer vision (CS 6501). Click image for details (warning: contains grammatical errors).",
