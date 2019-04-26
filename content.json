@@ -1,6 +1,13 @@
 {
     "projects": [
         {
+            "type": "web",
+            "title": "Sense",
+            "link": "https://www.sensehq.com/",
+            "desc": "Worked on the data team building out all of the data infrastructure. Mostly Python, AWS, and bash.",
+            "screenshot_src": "./assets/images/sense.png"
+        },
+        {
             "type": "mobile",
             "title": "Yahoo Radar",
             "link": "https://itunes.apple.com/us/app/radar-travel-smart/id1107752959?mt=8",
@@ -17,28 +24,28 @@
         {
             "type": "mobile",
             "title": "Face Detector",
-            "link": "http://pourkazemi.me/face-detector.html",
+            "link": "http://localhost:3000/face-detector.html",
             "desc": "Linear and Gaussian face detectors for computer vision (CS 6501). Click image for details (warning: contains grammatical errors).",
             "screenshot_src": "./assets/images/face-detector/screenshot.png"
         },
         {
             "type": "web",
             "title": "Edge & Corner Detector",
-            "link": "http://pourkazemi.me/edge-detector.html",
+            "link": "http://localhost:3000/edge-detector.html",
             "desc": "Canny edge and Tomasi-Kanade corner detector for computer vision (CS 6501). Click image for details.",
             "screenshot_src": "./assets/images/edge-detector/screenshot.png"
         },
         {
             "type": "web",
             "title": "Ray Tracer",
-            "link": "http://pourkazemi.me/ray-tracer.html",
+            "link": "http://localhost:3000/ray-tracer.html",
             "desc": "For computer graphics (CS 4810). Won art contest (class size ~60). Click image for details.",
             "screenshot_src": "./assets/images/ray-tracer/screenshot.bmp"
         },
         {
             "type": "web",
             "title": "Black Swan Visualization",
-            "link": "http://pourkazemi.me/blackswan",
+            "link": "http://localhost:3000/blackswan",
             "desc": "Inequality visualization inspired by <em>The Black Swan</em>. Click the picture for a demo.",
             "screenshot_src": "./assets/images/blackswan.png"
         },
@@ -59,6 +66,6 @@
 
     "bio": {
         "img_src": "profile_pic.jpg",
-        "desc": "I am a software engineer at Yahoo helping create their new line of mobile search products. Specifically, I help build application servers, and primarily write code in Scala, Java, and Javascript. Before Yahoo, I interned at AddThis (later acquired by Oracle) and graduated UVA in 2015 (BS CS). My email is bp5xj @ virginia.edu."
+        "desc": "I am a software engineer at Sense helping build out their data infrastructure. I primarily write code in Python.  Before that, I was a software engineer at Yahoo helping create their new line of mobile search products. Specifically, I helped build application servers, and wrote code in Scala, Java, and Javascript. Before Yahoo, I interned at AddThis (later acquired by Oracle) and graduated UVA in 2015 (BS CS). My email is bobby.pourkazemi@gmail.com."
     }
 }
